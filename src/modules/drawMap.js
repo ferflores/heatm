@@ -5,6 +5,7 @@ const targetColor = {R:255, G:255, B:0, A:1};
 const defColorIncrement = .4;
 const defAlphaIncrement = .1;
 
+let drawPointsBatch = 50;
 let markedPoints = {};
 let context = null;
 
@@ -85,12 +86,15 @@ function drawPoints(points, from, to){
     for (var i = from; i < to; i++) {
       processPoints(points[i].x, points[i].y);
     }
-    drawPoints(points, from + 50, to + 50);
+    drawPoints(points, from + drawPointsBatch, to + drawPointsBatch);
   }, 100);
 }
 
-export default points => {
+export default (points, pointsBatch) => {
   if(points && points.length > 0){
+    if(pointsBatch){
+      drawPointsBatch = pointsBatch;
+    }
     createCanvas();
     drawPoints(points, 0);
   }

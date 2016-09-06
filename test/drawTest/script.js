@@ -4,7 +4,7 @@ function updateCoords(x, y){
   pointsSpan.textContent = 'x: ' + x + ' y: '+ y;
 }
 
-var hmap = heatm({newPointsCallback:updateCoords});
+var hmap = heatm({onNewPoint:updateCoords});
 
 hmap.startRecording();
 

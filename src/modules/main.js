@@ -1,32 +1,19 @@
-import drawMap from './drawMap';
+import * as actions from './actions';
 
-let config = {
-  newPointsCallback: null
-}
-
-let recordedPoints = [];
-
-function addEvents(){
-  window.onmousemove = null;
-  window.onmousemove = event => {
-    mouseMoved(event.clientX, event.clientY);
+let state = {
+  recording: false,
+  posting: false,
+  recordedPoints: [],
+  config: {
+    onNewPoint: null,
+    postPointsUrl: null
   }
-}
-
-function stopRecording(){
-  window.onmousemove = null;
-}
-
-function mouseMoved(x, y){
-  if(config.newPointsCallback){
-    config.newPointsCallback(x, y);
-  }
-  recordedPoints.push({x,y});
 }
 
 function setConfig(configObj){
   if(configObj){
-    config.newPointssCallback = configObj.newPointsCallback;
+    state.config.onNewPoint = configObj.onNewPoint;
+    state.config.postPointsUrl = configObj.postPointsUrl
   }
 }
 
@@ -35,17 +22,10 @@ export default configObj => {
   setConfig(configObj);
 
   return {
-    startRecording: () => {
-      addEvents();
-    },
-
-    stopRecording: () => {
-      stopRecording();
-    },
-
-    drawHeatMap: () => {
-      stopRecording();
-      drawMap(recordedPoints);
-    }
+    startRecording: () => { actions.startRecording(state) },
+    stopRecording: () => { actions.stopRecording(state) },
+    startPostingPoints: () => { actions.startPostingPoints(state) },
+    stopPostingPoints: () => { actions.stopPostingPoints(state) },
+    drawHeatMap: () => { actions.drawHeatMap(state) }
   }
 }
