@@ -200,16 +200,32 @@
 	  markedCoords['dot' + x + y] = newColor;
 	}
 
-	function drawCoords(coords) {
-	  for (var i = 0; i < coords.length; i++) {
-	    processCoords(coords[i].x, coords[i].y);
+	function drawCoords(coords, from, to) {
+
+	  if (to >= coords.length) {
+	    to = coords.length;
 	  }
+
+	  if (from >= coords.length) {
+	    return;
+	  }
+
+	  if (!to) {
+	    to = coords.length > 100 ? 50 : 100;
+	  }
+
+	  setTimeout(function () {
+	    for (var i = from; i < to; i++) {
+	      processCoords(coords[i].x, coords[i].y);
+	    }
+	    drawCoords(coords, from + 50, to + 50);
+	  }, 100);
 	}
 
 	exports.default = function (coords) {
 	  if (coords && coords.length > 0) {
 	    createCanvas();
-	    drawCoords(coords);
+	    drawCoords(coords, 0);
 	  }
 	};
 
