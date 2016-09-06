@@ -1,0 +1,22 @@
+{
+  "name": "heatm",
+  "version": "1.0.0",
+  "description": "Heat map drawer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "js",
+    "javascript",
+    "heatmap"
+  ],
+  "author": "Fernando Flores",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "webpack": "^1.13.2"
+  }
+}
