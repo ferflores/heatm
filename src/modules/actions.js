@@ -1,14 +1,6 @@
 import drawMap from './drawMap';
 import queuePostPoint from './pointQueuePoster';
 
-export function addMouseEvents(state){
-  if(!window.onmousemove){
-    window.onmousemove = event => {
-      mouseMoved(state, event.clientX, event.clientY);
-    }
-  }
-}
-
 export function startRecording(state){
   state.recording = true;
   addMouseEvents(state);
@@ -35,6 +27,14 @@ export function stopPostingPoints(state){
 export function drawHeatMap(state, pointsBatch){
   stopRecording(state);
   drawMap(state.recordedPoints, pointsBatch);
+}
+
+function addMouseEvents(state){
+  if(!window.onmousemove){
+    window.onmousemove = event => {
+      mouseMoved(state, event.clientX, event.clientY);
+    }
+  }
 }
 
 function mouseMoved(state, x, y){

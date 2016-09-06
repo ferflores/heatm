@@ -119,7 +119,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.addMouseEvents = addMouseEvents;
 	exports.startRecording = startRecording;
 	exports.stopRecording = stopRecording;
 	exports.startPostingPoints = startPostingPoints;
@@ -135,14 +134,6 @@
 	var _pointQueuePoster2 = _interopRequireDefault(_pointQueuePoster);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function addMouseEvents(state) {
-	  if (!window.onmousemove) {
-	    window.onmousemove = function (event) {
-	      mouseMoved(state, event.clientX, event.clientY);
-	    };
-	  }
-	}
 
 	function startRecording(state) {
 	  state.recording = true;
@@ -170,6 +161,14 @@
 	function drawHeatMap(state, pointsBatch) {
 	  stopRecording(state);
 	  (0, _drawMap2.default)(state.recordedPoints, pointsBatch);
+	}
+
+	function addMouseEvents(state) {
+	  if (!window.onmousemove) {
+	    window.onmousemove = function (event) {
+	      mouseMoved(state, event.clientX, event.clientY);
+	    };
+	  }
 	}
 
 	function mouseMoved(state, x, y) {
