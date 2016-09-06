@@ -71,10 +71,10 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var config = {
-	  newCoordsCallback: null
+	  newPointsCallback: null
 	};
 
-	var recordedCoords = [];
+	var recordedPoints = [];
 
 	function addEvents() {
 	  window.onmousemove = null;
@@ -88,15 +88,15 @@
 	}
 
 	function mouseMoved(x, y) {
-	  if (config.newCoordsCallback) {
-	    config.newCoordsCallback(x, y);
+	  if (config.newPointsCallback) {
+	    config.newPointsCallback(x, y);
 	  }
-	  recordedCoords.push({ x: x, y: y });
+	  recordedPoints.push({ x: x, y: y });
 	}
 
 	function setConfig(configObj) {
 	  if (configObj) {
-	    config.newCoordsCallback = configObj.newCoordsCallback;
+	    config.newPointssCallback = configObj.newPointsCallback;
 	  }
 	}
 
@@ -115,7 +115,7 @@
 
 	    drawHeatMap: function drawHeatMap() {
 	      _stopRecording();
-	      (0, _drawMap2.default)(recordedCoords);
+	      (0, _drawMap2.default)(recordedPoints);
 	    }
 	  };
 	};
@@ -141,7 +141,7 @@
 	var defColorIncrement = .4;
 	var defAlphaIncrement = .1;
 
-	var markedCoords = {};
+	var markedPoints = {};
 	var context = null;
 
 	function createCanvas() {
@@ -165,7 +165,7 @@
 	  context = canvas.getContext('2d');
 	}
 
-	function processCoords(x, y) {
+	function processPoints(x, y) {
 	  paintDot(x, y, defColorIncrement, defAlphaIncrement);
 
 	  var aroundDots = [];
@@ -185,7 +185,7 @@
 
 	function paintDot(x, y, colorIncrement, alphaIncrement) {
 	  var source = initialColor;
-	  var currentColor = markedCoords['dot' + x + y];
+	  var currentColor = markedPoints['dot' + x + y];
 
 	  if (currentColor) {
 	    source = currentColor;
@@ -197,35 +197,35 @@
 
 	  context.fillRect(x, y, 1, 1);
 
-	  markedCoords['dot' + x + y] = newColor;
+	  markedPoints['dot' + x + y] = newColor;
 	}
 
-	function drawCoords(coords, from, to) {
+	function drawPoints(points, from, to) {
 
-	  if (to >= coords.length) {
-	    to = coords.length;
+	  if (to >= points.length) {
+	    to = points.length;
 	  }
 
-	  if (from >= coords.length) {
+	  if (from >= points.length) {
 	    return;
 	  }
 
 	  if (!to) {
-	    to = coords.length > 100 ? 50 : 100;
+	    to = points.length > 100 ? 50 : 100;
 	  }
 
 	  setTimeout(function () {
 	    for (var i = from; i < to; i++) {
-	      processCoords(coords[i].x, coords[i].y);
+	      processPoints(points[i].x, points[i].y);
 	    }
-	    drawCoords(coords, from + 50, to + 50);
+	    drawPoints(points, from + 50, to + 50);
 	  }, 100);
 	}
 
-	exports.default = function (coords) {
-	  if (coords && coords.length > 0) {
+	exports.default = function (points) {
+	  if (points && points.length > 0) {
 	    createCanvas();
-	    drawCoords(coords, 0);
+	    drawPoints(points, 0);
 	  }
 	};
 

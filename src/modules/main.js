@@ -1,10 +1,10 @@
 import drawMap from './drawMap';
 
 let config = {
-  newCoordsCallback: null
+  newPointsCallback: null
 }
 
-let recordedCoords = [];
+let recordedPoints = [];
 
 function addEvents(){
   window.onmousemove = null;
@@ -18,15 +18,15 @@ function stopRecording(){
 }
 
 function mouseMoved(x, y){
-  if(config.newCoordsCallback){
-    config.newCoordsCallback(x, y);
+  if(config.newPointsCallback){
+    config.newPointsCallback(x, y);
   }
-  recordedCoords.push({x,y});
+  recordedPoints.push({x,y});
 }
 
 function setConfig(configObj){
   if(configObj){
-    config.newCoordsCallback = configObj.newCoordsCallback;
+    config.newPointssCallback = configObj.newPointsCallback;
   }
 }
 
@@ -45,7 +45,7 @@ export default configObj => {
 
     drawHeatMap: () => {
       stopRecording();
-      drawMap(recordedCoords);
+      drawMap(recordedPoints);
     }
   }
 }

@@ -5,7 +5,7 @@ const targetColor = {R:255, G:255, B:0, A:1};
 const defColorIncrement = .4;
 const defAlphaIncrement = .1;
 
-let markedCoords = {};
+let markedPoints = {};
 let context = null;
 
 function createCanvas(){
@@ -29,7 +29,7 @@ function createCanvas(){
   context = canvas.getContext('2d');
 }
 
-function processCoords(x, y){
+function processPoints(x, y){
   paintDot(x, y, defColorIncrement, defAlphaIncrement);
 
   var aroundDots = [];
@@ -49,7 +49,7 @@ function processCoords(x, y){
 
 function paintDot(x, y, colorIncrement, alphaIncrement){
   var source = initialColor;
-  var currentColor = markedCoords['dot' + x + y];
+  var currentColor = markedPoints['dot' + x + y];
 
   if(currentColor){
     source = currentColor;
@@ -64,34 +64,34 @@ function paintDot(x, y, colorIncrement, alphaIncrement){
 
   context.fillRect(x, y, 1, 1);
 
-  markedCoords['dot' + x + y] = newColor;
+  markedPoints['dot' + x + y] = newColor;
 }
 
-function drawCoords(coords, from, to){
+function drawPoints(points, from, to){
 
-  if(to >= coords.length){
-    to = coords.length;
+  if(to >= points.length){
+    to = points.length;
   }
 
-  if(from >= coords.length){
+  if(from >= points.length){
     return;
   }
 
   if(!to){
-    to = coords.length > 100 ? 50 : 100;
+    to = points.length > 100 ? 50 : 100;
   }
 
   setTimeout(()=> {
     for (var i = from; i < to; i++) {
-      processCoords(coords[i].x, coords[i].y);
+      processPoints(points[i].x, points[i].y);
     }
-    drawCoords(coords, from + 50, to + 50);
+    drawPoints(points, from + 50, to + 50);
   }, 100);
 }
 
-export default coords => {
-  if(coords && coords.length > 0){
+export default points => {
+  if(points && points.length > 0){
     createCanvas();
-    drawCoords(coords, 0);
+    drawPoints(points, 0);
   }
 }

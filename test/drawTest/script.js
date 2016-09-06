@@ -1,10 +1,10 @@
 function updateCoords(x, y){
-  var coordsSpan = document.getElementById('coords');
+  var pointsSpan = document.getElementById('coords');
 
-  coordsSpan.textContent = 'x: ' + x + ' y: '+ y;
+  pointsSpan.textContent = 'x: ' + x + ' y: '+ y;
 }
 
-var hmap = heatm({newCoordsCallback:updateCoords});
+var hmap = heatm({newPointsCallback:updateCoords});
 
 hmap.startRecording();
 
