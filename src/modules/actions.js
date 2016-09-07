@@ -1,5 +1,7 @@
 import drawMap from './drawMap';
-import queuePostPoint from './pointQueuePoster';
+import pointQueuePoster from './pointQueuePoster';
+
+let _pointPoster = null;
 
 export function startRecording(state){
   state.recording = true;
@@ -15,6 +17,16 @@ export function startPostingPoints(state){
   if(state.config.postPointsUrl){
     state.posting = true;
     addMouseEvents(state);
+
+    if(!_pointPoster){
+      _pointPoster = pointQueuePoster(
+        state.config.postPointsUrl,
+        state.config.pointsPostBatch
+      );
+    }
+
+    _pointPoster.startPosting();
+
   }else{
     throw new Error('No postPointsUrl configured');
   }
@@ -22,6 +34,9 @@ export function startPostingPoints(state){
 
 export function stopPostingPoints(state){
   state.posting = false;
+  if(_pointPoster){
+    _pointPoster.stopPosting();
+  }
 }
 
 export function drawHeatMap(state, pointsBatch){
@@ -47,6 +62,6 @@ function mouseMoved(state, x, y){
   }
 
   if(state.posting){
-    queuePostPoint({x:x,y:y});
+    _pointPoster.queuePoint({x:x,y:y});
   }
 }

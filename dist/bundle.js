@@ -76,7 +76,8 @@
 	  recordedPoints: [],
 	  config: {
 	    onNewPoint: null,
-	    postPointsUrl: null
+	    postPointsUrl: null,
+	    postPointsBatch: 50
 	  }
 	};
 
@@ -84,6 +85,7 @@
 	  if (configObj) {
 	    state.config.onNewPoint = configObj.onNewPoint;
 	    state.config.postPointsUrl = configObj.postPointsUrl;
+	    state.config.postPointsBatch = configObj.postPointsBatch;
 	  }
 	}
 
@@ -135,6 +137,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var _pointPoster = null;
+
 	function startRecording(state) {
 	  state.recording = true;
 	  addMouseEvents(state);
@@ -149,6 +153,12 @@
 	  if (state.config.postPointsUrl) {
 	    state.posting = true;
 	    addMouseEvents(state);
+
+	    if (!_pointPoster) {
+	      _pointPoster = (0, _pointQueuePoster2.default)(state.config.postPointsUrl, state.config.pointsPostBatch);
+	    }
+
+	    _pointPoster.startPosting();
 	  } else {
 	    throw new Error('No postPointsUrl configured');
 	  }
@@ -156,6 +166,9 @@
 
 	function stopPostingPoints(state) {
 	  state.posting = false;
+	  if (_pointPoster) {
+	    _pointPoster.stopPosting();
+	  }
 	}
 
 	function drawHeatMap(state, pointsBatch) {
@@ -181,7 +194,7 @@
 	  }
 
 	  if (state.posting) {
-	    (0, _pointQueuePoster2.default)({ x: x, y: y });
+	    _pointPoster.queuePoint({ x: x, y: y });
 	  }
 	}
 
@@ -336,9 +349,32 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = function (config) {
-	  var postUrl = config.postPointsUrl;
-	  var postPointsBatch = config.postPointsBatch || 50;
+	var _postUrl = null;
+	var _batch = null;
+	var _queue = [];
+
+	function startPosting() {
+	  console.log('start posting', _postUrl, _batch, _queue);
+	}
+
+	function stopPosting() {
+	  console.log('start posting');
+	}
+
+	function queuePoint(point) {
+	  console.log('queue point', point);
+	}
+
+	exports.default = function (postUrl, batch) {
+
+	  _postUrl = postUrl;
+	  _batch = batch || 50;
+
+	  return {
+	    startPosting: startPosting,
+	    stopPosting: stopPosting,
+	    queuePoint: queuePoint
+	  };
 	};
 
 /***/ },

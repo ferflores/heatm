@@ -6,14 +6,16 @@ let state = {
   recordedPoints: [],
   config: {
     onNewPoint: null,
-    postPointsUrl: null
+    postPointsUrl: null,
+    postPointsBatch: 50
   }
 }
 
 function setConfig(configObj){
   if(configObj){
     state.config.onNewPoint = configObj.onNewPoint;
-    state.config.postPointsUrl = configObj.postPointsUrl
+    state.config.postPointsUrl = configObj.postPointsUrl;
+    state.config.postPointsBatch = configObj.postPointsBatch;
   }
 }
 
