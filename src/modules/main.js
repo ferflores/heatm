@@ -5,17 +5,18 @@ let state = {
   posting: false,
   recordedPoints: [],
   config: {
+    projectName: 'default',
     onNewPoint: null,
     postPointsUrl: null,
-    postPointsBatch: 50
+    postPointsBatch: 50,
+    maxPointsToDraw: null,
+    maxPointsToPost: null
   }
 }
 
 function setConfig(configObj){
   if(configObj){
-    state.config.onNewPoint = configObj.onNewPoint;
-    state.config.postPointsUrl = configObj.postPointsUrl;
-    state.config.postPointsBatch = configObj.postPointsBatch;
+    state.config = configObj;
   }
 }
 

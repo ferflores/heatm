@@ -1,11 +1,12 @@
 import axios from 'axios';
 
+let _project = null;
 let _postUrl = null;
 let _batch = null;
 let _queue = [];
 
 function startPosting(){
-  console.log('start posting', _postUrl, _batch, _queue);
+  axios.post(_postUrl, { project: _project, points:[]})
 }
 
 function stopPosting(){
@@ -13,13 +14,14 @@ function stopPosting(){
 }
 
 function queuePoint(point){
-  console.log('queue point', point);
+  _queue.push(point);
 }
 
-export default (postUrl, batch) => {
+export default (project, postUrl, batch) => {
 
   _postUrl = postUrl;
   _batch = batch || 50;
+  _project = project;
 
   return{
     startPosting: startPosting,
