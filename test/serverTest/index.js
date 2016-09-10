@@ -7,6 +7,12 @@ var app = express();
 
 app.use(bodyParser.json()).use(bodyParser.urlencoded({extended:true}));
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.get('/getPoints', (req, res) => {
   var project = req.query.project;
 
@@ -23,14 +29,20 @@ app.get('/getPoints', (req, res) => {
 });
 
 app.post('/setPoints', (req, res) => {
+
+  var project = req.body.project;
+  var screen = req.body.screen.width + '_' + req.body.screen.height;
+  var points = req.body.points;
+
   if(!projects[req.body.project]){
-    projects[req.body.project] = [];
+    projects[req.body.project] = {};
   }
 
-  var points = JSON.parse(req.body.points);
-
-  points.forEach(function(point){
-    projects[req.body.project].push(point);
+  req.body.points.forEach(function(point){
+    if(!projects[req.body.project][screen]){
+      projects[req.body.project][screen] = [];
+    }
+    projects[req.body.project][screen].push(point);
   });
 
   res.send('ok');

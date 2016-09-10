@@ -20,8 +20,10 @@ export function startPostingPoints(state){
 
     if(!_pointPoster){
       _pointPoster = pointQueuePoster(
+        state.config.projectName,
         state.config.postPointsUrl,
-        state.config.pointsPostBatch
+        state.config.pointsPostBatch,
+        state.config.maxPointsToPost
       );
     }
 

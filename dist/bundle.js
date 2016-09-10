@@ -75,17 +75,18 @@
 	  posting: false,
 	  recordedPoints: [],
 	  config: {
+	    projectName: 'default',
 	    onNewPoint: null,
 	    postPointsUrl: null,
-	    postPointsBatch: 50
+	    postPointsBatch: 50,
+	    maxPointsToDraw: null,
+	    maxPointsToPost: null
 	  }
 	};
 
 	function setConfig(configObj) {
 	  if (configObj) {
-	    state.config.onNewPoint = configObj.onNewPoint;
-	    state.config.postPointsUrl = configObj.postPointsUrl;
-	    state.config.postPointsBatch = configObj.postPointsBatch;
+	    state.config = configObj;
 	  }
 	}
 
@@ -155,7 +156,7 @@
 	    addMouseEvents(state);
 
 	    if (!_pointPoster) {
-	      _pointPoster = (0, _pointQueuePoster2.default)(state.config.postPointsUrl, state.config.pointsPostBatch);
+	      _pointPoster = (0, _pointQueuePoster2.default)(state.config.projectName, state.config.postPointsUrl, state.config.pointsPostBatch, state.config.maxPointsToPost);
 	    }
 
 	    _pointPoster.startPosting();
@@ -349,26 +350,71 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var _project = null;
 	var _postUrl = null;
 	var _batch = null;
 	var _queue = [];
+	var _posting = false;
+	var _maxPoints = null;
+	var _pointsCount = 0;
 
 	function startPosting() {
-	  console.log('start posting', _postUrl, _batch, _queue);
+	  _posting = true;
+	  post();
+	}
+
+	function post() {
+
+	  if (_maxPoints && _pointsCount >= _maxPoints) {
+	    _posting = false;
+	    console.log('maxpoints reached');
+	  }
+
+	  if (!_posting) {
+	    return;
+	  }
+
+	  var slice = _queue.slice(0, _batch);
+
+	  if (slice.length + _pointsCount > _maxPoints) {
+	    slice = slice.slice(0, _maxPoints - (_pointsCount + slice.length));
+	  }
+	  _pointsCount += slice.length;
+
+	  if (slice.length > 0) {
+	    var postData = {
+	      project: _project,
+	      points: slice,
+	      screen: {
+	        width: screen.availWidth,
+	        height: screen.availHeight
+	      }
+	    };
+
+	    _axios2.default.post(_postUrl, postData).then(function (response) {
+	      _queue = _queue.slice(_batch, _queue.length);
+	    }).catch(function (error) {
+	      console.log(error);
+	    });
+	  }
+
+	  setTimeout(post, 1000);
 	}
 
 	function stopPosting() {
-	  console.log('start posting');
+	  _posting = false;
 	}
 
 	function queuePoint(point) {
-	  console.log('queue point', point);
+	  _queue.push(point);
 	}
 
-	exports.default = function (postUrl, batch) {
+	exports.default = function (project, postUrl, batch, maxPoints) {
 
 	  _postUrl = postUrl;
 	  _batch = batch || 50;
+	  _project = project;
+	  _maxPoints = maxPoints;
 
 	  return {
 	    startPosting: startPosting,
