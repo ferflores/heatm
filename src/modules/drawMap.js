@@ -14,7 +14,7 @@ function createCanvas(){
   var existingCanvas = document.getElementById('canvasHeatM');
 
   if(existingCanvas){
-    existingCanvas.parentNode.removeChild(existingCanvas)
+    return;
   }
 
   var canvas = document.createElement('canvas');
@@ -83,19 +83,32 @@ function drawPoints(points, from, to){
   }
 
   setTimeout(()=> {
-    for (var i = from; i < to; i++) {
+
+    for (var i = from; i < to-1; i++) {
       processPoints(points[i].x, points[i].y);
     }
     drawPoints(points, from + drawPointsBatch, to + drawPointsBatch);
   }, 100);
 }
 
-export default (points, pointsBatch) => {
+function drawByBatch (points, pointsBatch){
+  createCanvas();
   if(points && points.length > 0){
     if(pointsBatch){
       drawPointsBatch = pointsBatch;
     }
-    createCanvas();
     drawPoints(points, 0);
   }
+}
+
+function draw(points){
+  createCanvas();
+  for (var i = 0; i < points.length; i++) {
+    processPoints(points[i].x, points[i].y);
+  }
+}
+
+export default {
+  drawByBatch:drawByBatch,
+  draw: draw
 }

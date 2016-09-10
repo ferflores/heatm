@@ -29,6 +29,7 @@ export default configObj => {
     stopRecording: () => { actions.stopRecording(state) },
     startPostingPoints: () => { actions.startPostingPoints(state) },
     stopPostingPoints: () => { actions.stopPostingPoints(state) },
-    drawHeatMap: () => { actions.drawHeatMap(state) }
+    drawHeatMap: () => { actions.drawHeatMap(state) },
+    drawHeatMapFromRemote: () => { actions.drawHeatMapFromRemote(state) },
   }
 }

@@ -1,4 +1,5 @@
 import drawMap from './drawMap';
+import drawMapFromRemote from './drawMapFromRemote';
 import pointQueuePoster from './pointQueuePoster';
 
 let _pointPoster = null;
@@ -43,7 +44,11 @@ export function stopPostingPoints(state){
 
 export function drawHeatMap(state, pointsBatch){
   stopRecording(state);
-  drawMap(state.recordedPoints, pointsBatch);
+  drawMap.drawByBatch(state.recordedPoints, pointsBatch);
+}
+
+export function drawHeatMapFromRemote(state, pointsBatch){
+  drawMapFromRemote(state.config);
 }
 
 function addMouseEvents(state){
