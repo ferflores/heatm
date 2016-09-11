@@ -10,7 +10,9 @@ let state = {
     postPointsUrl: null,
     postPointsBatch: 50,
     maxPointsToDraw: null,
-    maxPointsToPost: null
+    maxPointsToPost: null,
+    postPointsInterval: 250,
+    getPointsInterval: 250
   }
 }
 

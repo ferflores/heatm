@@ -24,7 +24,8 @@ export function startPostingPoints(state){
         state.config.projectName,
         state.config.postPointsUrl,
         state.config.pointsPostBatch,
-        state.config.maxPointsToPost
+        state.config.maxPointsToPost,
+        state.config.postPointsInterval
       );
     }
 
@@ -42,9 +43,9 @@ export function stopPostingPoints(state){
   }
 }
 
-export function drawHeatMap(state, pointsBatch){
+export function drawHeatMap(state){
   stopRecording(state);
-  drawMap.drawByBatch(state.recordedPoints, pointsBatch);
+  drawMap.drawByBatch(state.recordedPoints, state.config.pointsBatch);
 }
 
 export function drawHeatMapFromRemote(state, pointsBatch){

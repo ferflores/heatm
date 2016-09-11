@@ -7,6 +7,7 @@ let _queue = [];
 let _posting = false;
 let _maxPoints = null;
 let _pointsCount = 0;
+let _postInterval = 250;
 
 function startPosting(){
   _posting = true;
@@ -47,7 +48,7 @@ function post(){
     });
   }
 
-  setTimeout(post, 1000);
+  setTimeout(post, _postInterval);
 }
 
 function stopPosting(){
@@ -58,12 +59,13 @@ function queuePoint(point){
   _queue.push(point);
 }
 
-export default (project, postUrl, batch, maxPoints) => {
+export default (project, postUrl, batch, maxPoints, postInterval) => {
 
   _postUrl = postUrl;
   _batch = batch || 50;
   _project = project;
   _maxPoints = maxPoints;
+  _postInterval = postInterval || 250;
 
   return{
     startPosting: startPosting,
