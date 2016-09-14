@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/heatm.svg?style=flat-square)](https://www.npmjs.com/package/heatm)
 
-javascript heatmap
+javascript heatmap, wraps heatmap.js for point http posting and remote drawing
 
 ![preview gif](doc/preview.gif)
 

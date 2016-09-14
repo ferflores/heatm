@@ -1,4 +1,3 @@
-import interpolateColor from './colorInterpolation';
 import hmaps from 'heatmap.js';
 
 let heatmap = null;
@@ -36,7 +35,8 @@ function createCanvas(){
   });
 
   heatmap.setData({
-    max:10
+    max:10,
+    data:[{x:1,y:1,value:0}]
   });
 }
 
