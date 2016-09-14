@@ -1,5 +1,7 @@
 # heatm
 
+[![npm version](https://img.shields.io/npm/v/heatm.svg?style=flat-square)](https://www.npmjs.com/package/heatm)
+
 javascript heatmap
 
 ![preview gif](doc/preview.gif)
