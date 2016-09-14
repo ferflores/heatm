@@ -36,7 +36,7 @@ function createCanvas(){
 
   heatmap.setData({
     max:10,
-    data:[{x:1,y:1,value:0}]
+    data:[{x:1,y:1,value:-1}]
   });
 }
 
@@ -76,7 +76,7 @@ function drawByBatch (points, pointsBatch){
 function draw(points){
   createCanvas();
   for (var i = 0; i < points.length; i++) {
-    heatmap.addData({ x: points[i].x, y: points[i].y, value: 1});
+    heatmap.addData({ x: points[i].x, y: points[i].y, value: 0});
   }
 }
 
