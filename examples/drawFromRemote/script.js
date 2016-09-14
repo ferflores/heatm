@@ -1,8 +1,7 @@
 var hmap = heatm({
   projectName:'default',
   getPointsUrl:'http://localhost:3000/getPoints',
-  getPointsBatch: 50,
-  getPointsResolution: null //{width: 800, height:600}
+  getPointsBatch: 50
 });
 
 document.getElementById('drawBtn').addEventListener('click', function(){
