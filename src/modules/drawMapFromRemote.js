@@ -25,7 +25,7 @@ function loadPointsAndDraw(){
     console.log(error);
   });
 
-  setTimeout(loadPointsAndDraw, _config.getPointsInterval || 250);
+  setTimeout(loadPointsAndDraw, _config.getPointsInterval || 50);
 }
 
 export default config => {

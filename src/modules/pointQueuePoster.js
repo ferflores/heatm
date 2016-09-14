@@ -65,7 +65,7 @@ export default (project, postUrl, batch, maxPoints, postInterval) => {
   _batch = batch || 50;
   _project = project;
   _maxPoints = maxPoints;
-  _postInterval = postInterval || 250;
+  _postInterval = postInterval || 50;
 
   return{
     startPosting: startPosting,
