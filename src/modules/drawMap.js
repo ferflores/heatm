@@ -1,13 +1,7 @@
 import hmaps from 'heatmap.js';
 
 let heatmap = null;
-const initialColor = {R:255, G:0, B:0, A:0};
-const targetColor = {R:255, G:255, B:0, A:1};
-const defColorIncrement = .4;
-const defAlphaIncrement = .1;
-
 let drawPointsBatch = 50;
-let markedPoints = {};
 let context = null;
 
 function createCanvas(){
