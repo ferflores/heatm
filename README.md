@@ -4,7 +4,7 @@ javascript heatmap
 
 ![preview gif](doc/preview.gif)
 
-``` npm install && webpack ```
+``` npm install heatm ```
 
 Local test at /examples/onMemoryLocalDraw/index.html
 
