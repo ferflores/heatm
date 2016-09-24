@@ -1,8 +1,8 @@
 {
   "name": "heatm",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Heat map drawer",
-  "main": "index.js",
+  "main": "dist/bundle.js",
   "scripts": {
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
