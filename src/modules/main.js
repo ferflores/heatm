@@ -22,7 +22,7 @@ function setConfig(configObj){
   }
 }
 
-export default configObj => {
+var dist = configObj => {
 
   setConfig(configObj);
 
@@ -35,3 +35,10 @@ export default configObj => {
     drawHeatMapFromRemote: () => { actions.drawHeatMapFromRemote(state) },
   }
 }
+
+
+if(window){
+  window.heatm = dist;
+}
+
+export default dist;
